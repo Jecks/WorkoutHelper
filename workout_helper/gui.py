@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QAction, QApplication
+from PyQt5.QtWidgets import (QMainWindow, QAction, QApplication, QGridLayout,
+                            QPushButton, QWidget, QSizePolicy, QSpacerItem)
 from PyQt5.QtGui import QIcon
 
 class MainWindow(QMainWindow):
@@ -16,34 +17,120 @@ class MainWindow(QMainWindow):
         initUI: used to create the basic layout of the main window
 
         """
-        # Action definition to be used by Menu and Toolbar
+    # Action definition to be used by Menu and Toolbar
 
         # to close the application
-        exitAction = QAction(QIcon('images/logo.png'), 'Quit', self)
-        exitAction.setShortcut('Ctrl+Q')
-        exitAction.setStatusTip('Exit Workout Helper')
-        exitAction.triggered.connect(self.close)
+        self.exitAction = QAction(QIcon('images/logo.png'), 'Quit', self)
+        self.exitAction.setShortcut('Ctrl+Q')
+        self.exitAction.setStatusTip('Exit Workout Helper')
+        self.exitAction.triggered.connect(self.close)
         # to start a workout
-        startAction = QAction(QIcon('images/start.png'),'Start',self)
-        startAction.setShortcut('Ctrl+S')
-        startAction.setStatusTip('Start a Workout')
-        startAction.triggered.connect(self.close)
+        self.startAction = QAction(QIcon('images/start.png'),'Start working out!',self)
+        self.startAction.setShortcut('Ctrl+S')
+        self.startAction.setStatusTip('Start a Workout')
+        self.startAction.triggered.connect(self.close)
+
+    # UI  elements creation
 
         # initialize the status bar on the bottom
         self.statusBar()
 
         # create a menu bar and populate it
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exitAction)
+        self.menubar = self.menuBar()
+        self.fileMenu = self.menubar.addMenu('&File')
+        self.fileMenu.addAction(self.exitAction)
 
         # create a tool bar and populate it
-        toolbar = self.addToolBar('Start')
-        toolbar.addAction(startAction)
+        self.toolbar = self.addToolBar('Start')
+        self.toolbar.addAction(self.startAction)
+
+        # Define the default central space layout
+        self.central_widget = CentralWidgetMain()
+        self.setCentralWidget(self.central_widget)
 
         # define the default properties of the main window
         self.setGeometry(300,300,350,250)
         self.setWindowTitle('Workout Helper')
 
-        #draw the window
-        self.show()
+
+class CentralWidgetMain(QWidget):
+    """
+    This is the central widget of the application,
+    this will be used to create all the different views used in the
+    application
+    """
+
+    def __init__(self):
+
+        # Call to QWidget __init__()
+        super().__init__()
+
+        # creating the grid layout
+        self.grid = QGridLayout()
+        self.setLayout(self.grid)
+        self.grid.setSpacing(0)
+
+        #create widgets to fill the layout
+        self.history = QPushButton('History')
+        self.history.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        self.workout_list = QPushButton('Workout List')
+        self.workout_list.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        self.create_exercise = QPushButton('Create exercise')
+        self.create_exercise.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        self.create_workout = QPushButton('Create a Workout')
+        self.create_workout.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        # populate layout
+        self.grid.addWidget(self.history,4,1,2,4)
+        self.grid.addWidget(self.workout_list, 0,1,2,4)
+        self.grid.addWidget(self.create_workout,2,1,2,2)
+        self.grid.addWidget(self.create_exercise,2,3,2,2)
+        # Temporary spacer to create the desired display
+        self.grid.addItem(QSpacerItem(100,100),0,0,5,1)
+
+class CentralWidgetWorkoutList(QWidget):
+    """
+    This is the central widget of the application,
+    this will be used to create all the different views used in the
+    application
+    """
+
+    def __init__(self):
+
+        # Call to QWidget __init__()
+        super().__init__()
+
+        # creating the grid layout
+        self.grid = QGridLayout()
+        self.setLayout(self.grid)
+        self.grid.setSpacing(0)
+
+        #create widgets for the layout
+        self.history = QPushButton('History')
+        self.history.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        self.workout_list = QPushButton('Workout List')
+        self.workout_list.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        self.create_exercise = QPushButton('Create exercise')
+        self.create_exercise.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        self.create_workout = QPushButton('Create a Workout')
+        self.create_workout.setSizePolicy(QSizePolicy.Expanding,
+            QSizePolicy.Expanding)
+
+        # populate layout
+        self.grid.addWidget(self.history,4,1,2,4)
+        self.grid.addWidget(self.workout_list, 0,1,2,4)
+        self.grid.addWidget(self.create_workout,2,1,2,2)
+        self.grid.addWidget(self.create_exercise,2,3,2,2)
+        # Temporary spacer to create the desired display
+        # self.grid.addItem(QSpacerItem(100,100),0,0,5,1)
