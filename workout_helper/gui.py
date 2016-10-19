@@ -19,8 +19,7 @@ class MainWindow(QMainWindow):
         initUI: used to create the basic layout of the main window
 
         """
-    # Action definition to be used by Menu and Toolbar
-
+        # Action definition to be used by Menu and Toolbar
         # to close the application
         self.exitAction = QAction(QIcon('images/logo.png'), 'Quit', self)
         self.exitAction.setShortcut('Ctrl+Q')
@@ -32,8 +31,7 @@ class MainWindow(QMainWindow):
         self.startAction.setStatusTip('Start a Workout')
         self.startAction.triggered.connect(self.close)
 
-    # UI  elements creation
-
+        # UI  elements creation
         # initialize the status bar on the bottom
         self.statusBar()
 
@@ -58,7 +56,7 @@ class MainWindow(QMainWindow):
         self.setGeometry(300,300,350,250)
         self.setWindowTitle('Workout Helper')
 
-# slots
+    # slots
     # change the central widget according to clicked button
     def change_central_widget(self):
         sender = self.sender()
@@ -68,7 +66,6 @@ class MainWindow(QMainWindow):
             self.central_widget.setCurrentWidget(workout_list_widget)
         else:
             self.statusBar().showMessage(sender.text() + 'was pressed')
-
 
 class CentralWidgetMain(QWidget):
     """
