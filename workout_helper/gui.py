@@ -1,15 +1,17 @@
 import sys
 from PyQt5.QtWidgets import (QMainWindow, QAction, QApplication, QGridLayout,
-                            QPushButton, QWidget, QSizePolicy, QSpacerItem)
+                            QPushButton, QWidget, QSizePolicy, QSpacerItem,
+                            QStackedWidget)
 from PyQt5.QtGui import QIcon
+
 
 class MainWindow(QMainWindow):
     """
     MainWindow is the principal window of the application, it holds all the menu
     and toolbar layout that will be used inside the application.
     """
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent = None):
+        super(MainWindow, self).__init__(parent)
         self.initUI()
 
     def initUI(self):
@@ -44,13 +46,28 @@ class MainWindow(QMainWindow):
         self.toolbar = self.addToolBar('Start')
         self.toolbar.addAction(self.startAction)
 
-        # Define the default central space layout
-        self.central_widget = CentralWidgetMain()
+    # Define the default central space layout
+        self.central_widget = QStackedWidget()
+        main_central_widget = CentralWidgetMain(self)
+        # add the main central widget to the stacked widget
+        self.central_widget.addWidget(main_central_widget)
+        # assign the stacked widget as main window central widget.
         self.setCentralWidget(self.central_widget)
 
         # define the default properties of the main window
         self.setGeometry(300,300,350,250)
         self.setWindowTitle('Workout Helper')
+
+# slots
+    # change the central widget according to clicked button
+    def change_central_widget(self):
+        sender = self.sender()
+        if sender.text() == "Workout List":
+            workout_list_widget = CentralWidgetWorkoutList(self)
+            self.central_widget.addWidget(workout_list_widget)
+            self.central_widget.setCurrentWidget(workout_list_widget)
+        else:
+            self.statusBar().showMessage(sender.text() + 'was pressed')
 
 
 class CentralWidgetMain(QWidget):
@@ -60,10 +77,10 @@ class CentralWidgetMain(QWidget):
     application
     """
 
-    def __init__(self):
+    def __init__(self, parent = None):
 
         # Call to QWidget __init__()
-        super().__init__()
+        super(CentralWidgetMain, self).__init__(parent)
 
         # creating the grid layout
         self.grid = QGridLayout()
@@ -93,18 +110,19 @@ class CentralWidgetMain(QWidget):
         self.grid.addWidget(self.create_exercise,2,3,2,2)
         # Temporary spacer to create the desired display
         self.grid.addItem(QSpacerItem(100,100),0,0,5,1)
+        # Define the signals
+        self.workout_list.clicked.connect(self.parent().change_central_widget)
 
 class CentralWidgetWorkoutList(QWidget):
     """
-    This is the central widget of the application,
-    this will be used to create all the different views used in the
-    application
+    This is the workout list central widget,
+    this is where the user can see all the available workouts
     """
 
-    def __init__(self):
+    def __init__(self, parent = None):
 
         # Call to QWidget __init__()
-        super().__init__()
+        super(CentralWidgetWorkoutList, self).__init__(parent)
 
         # creating the grid layout
         self.grid = QGridLayout()
