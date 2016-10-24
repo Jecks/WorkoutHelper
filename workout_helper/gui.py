@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
         self.exitAction.triggered.connect(self.close)
         # to start a workout
         self.startAction = QAction(QIcon('images/start.png'),
-                                   'Start working out!',self)
+                                   'Start working out!', self)
         self.startAction.setShortcut('Ctrl+S')
         self.startAction.setStatusTip('Start a Workout')
         self.startAction.triggered.connect(self.close)
@@ -103,12 +103,12 @@ class CentralWidgetMain(QWidget):
                                           QSizePolicy.Expanding)
 
         # populate layout
-        self.grid.addWidget(self.history,4,1,2,4)
-        self.grid.addWidget(self.workout_list, 0,1,2,4)
-        self.grid.addWidget(self.create_workout,2,1,2,2)
-        self.grid.addWidget(self.create_exercise,2,3,2,2)
+        self.grid.addWidget(self.history, 4, 1, 2, 4)
+        self.grid.addWidget(self.workout_list, 0, 1, 2, 4)
+        self.grid.addWidget(self.create_workout, 2, 1, 2, 2)
+        self.grid.addWidget(self.create_exercise, 2, 3, 2, 2)
         # Temporary spacer to create the desired display
-        self.grid.addItem(QSpacerItem(100,100),0,0,5,1)
+        self.grid.addItem(QSpacerItem(100, 100), 0, 0, 5, 1)
         # Define the signals
         self.workout_list.clicked.connect(self.parent().change_central_widget)
 
@@ -147,9 +147,9 @@ class CentralWidgetWorkoutList(QWidget):
                                           QSizePolicy.Expanding)
 
         # populate layout
-        self.grid.addWidget(self.history,4,1,2,4)
-        self.grid.addWidget(self.workout_list, 0,1,2,4)
-        self.grid.addWidget(self.create_workout,2,1,2,2)
-        self.grid.addWidget(self.create_exercise,2,3,2,2)
+        self.grid.addWidget(self.history, 4, 1, 2, 4)
+        self.grid.addWidget(self.workout_list, 0, 1, 2, 4)
+        self.grid.addWidget(self.create_workout, 2, 1, 2, 2)
+        self.grid.addWidget(self.create_exercise, 2, 3, 2, 2)
         # Temporary spacer to create the desired display
         # self.grid.addItem(QSpacerItem(100,100),0,0,5,1)
