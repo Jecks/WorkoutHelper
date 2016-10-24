@@ -1,7 +1,8 @@
 import sys
+
 from PyQt5.QtWidgets import (QMainWindow, QAction, QApplication, QGridLayout,
-                            QPushButton, QWidget, QSizePolicy, QSpacerItem,
-                            QStackedWidget)
+                             QPushButton, QWidget, QSizePolicy, QSpacerItem,
+                             QStackedWidget)
 from PyQt5.QtGui import QIcon
 
 
@@ -10,7 +11,7 @@ class MainWindow(QMainWindow):
     MainWindow is the principal window of the application, it holds all the menu
     and toolbar layout that will be used inside the application.
     """
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         self.initUI()
 
@@ -26,7 +27,8 @@ class MainWindow(QMainWindow):
         self.exitAction.setStatusTip('Exit Workout Helper')
         self.exitAction.triggered.connect(self.close)
         # to start a workout
-        self.startAction = QAction(QIcon('images/start.png'),'Start working out!',self)
+        self.startAction = QAction(QIcon('images/start.png'),
+                                   'Start working out!',self)
         self.startAction.setShortcut('Ctrl+S')
         self.startAction.setStatusTip('Start a Workout')
         self.startAction.triggered.connect(self.close)
@@ -44,7 +46,7 @@ class MainWindow(QMainWindow):
         self.toolbar = self.addToolBar('Start')
         self.toolbar.addAction(self.startAction)
 
-    # Define the default central space layout
+        # Define the default central space layout
         self.central_widget = QStackedWidget()
         main_central_widget = CentralWidgetMain(self)
         # add the main central widget to the stacked widget
@@ -53,7 +55,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
         # define the default properties of the main window
-        self.setGeometry(300,300,350,250)
+        self.setGeometry(300, 300, 350, 250)
         self.setWindowTitle('Workout Helper')
 
     # slots
@@ -74,7 +76,7 @@ class CentralWidgetMain(QWidget):
     application
     """
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
 
         # Call to QWidget __init__()
         super(CentralWidgetMain, self).__init__(parent)
@@ -90,15 +92,15 @@ class CentralWidgetMain(QWidget):
 
         self.workout_list = QPushButton('Workout List')
         self.workout_list.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                        QSizePolicy.Expanding)
 
         self.create_exercise = QPushButton('Create exercise')
         self.create_exercise.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                           QSizePolicy.Expanding)
 
         self.create_workout = QPushButton('Create a Workout')
         self.create_workout.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                          QSizePolicy.Expanding)
 
         # populate layout
         self.grid.addWidget(self.history,4,1,2,4)
@@ -114,9 +116,11 @@ class CentralWidgetWorkoutList(QWidget):
     """
     This is the workout list central widget,
     this is where the user can see all the available workouts
+    it's based on a grid, each workout is displayed in a cell
+    of the grid.
     """
 
-    def __init__(self, parent = None):
+    def __init__(self, parent=None):
 
         # Call to QWidget __init__()
         super(CentralWidgetWorkoutList, self).__init__(parent)
@@ -132,15 +136,15 @@ class CentralWidgetWorkoutList(QWidget):
 
         self.workout_list = QPushButton('Workout List')
         self.workout_list.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                        QSizePolicy.Expanding)
 
         self.create_exercise = QPushButton('Create exercise')
         self.create_exercise.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                           QSizePolicy.Expanding)
 
         self.create_workout = QPushButton('Create a Workout')
         self.create_workout.setSizePolicy(QSizePolicy.Expanding,
-            QSizePolicy.Expanding)
+                                          QSizePolicy.Expanding)
 
         # populate layout
         self.grid.addWidget(self.history,4,1,2,4)
