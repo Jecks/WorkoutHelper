@@ -202,7 +202,7 @@ class MyPushButton(QPushButton):
         self.minSize = 8 # minimum size of the icon
 
         sizePolicy = QSizePolicy(QSizePolicy.Expanding,
-                                       QSizePolicy.Expanding)
+                                 QSizePolicy.Expanding)
         self.setSizePolicy(sizePolicy)
 
     def paintEvent(self, event):
@@ -211,22 +211,16 @@ class MyPushButton(QPushButton):
         qp.begin(self)
 
         #---- get default style ----
-
         opt = QStyleOptionButton()
         self.initStyleOption(opt)
 
         #---- scale icon to button size ----
-
         Rect = opt.rect
-
         h = Rect.height()
         w = Rect.width()
         iconSize = max(min(h, w) - 2 * self.pad, self.minSize)
-
         opt.iconSize = QSize(iconSize, iconSize)
 
         #---- draw button ----
-
         self.style().drawControl(QStyle.CE_PushButton, opt, qp, self)
-
         qp.end()
