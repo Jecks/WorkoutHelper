@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
                                    'Start working out!', self)
         self.startAction.setShortcut('Ctrl+S')
         self.startAction.setStatusTip('Start a Workout')
-        self.startAction.triggered.connect(self.close)
+        self.startAction.triggered.connect(self.change_central_widget)
 
         # UI  elements creation
         # initialize the status bar on the bottom
@@ -80,7 +80,8 @@ class MainWindow(QMainWindow):
             self.central_widget.setCurrentIndex(self.breadcrumb.pop())
             self.breadcrumb.append(self.central_widget.currentIndex())
         else:
-            self.statusBar().showMessage(sender.text() + ' was pressed')
+            self.statusBar().showMessage(sender.text() +
+                                         ' was pressed, no action associated.')
 
 class CentralWidgetMain(QWidget):
     """
@@ -179,16 +180,16 @@ class CentralWidgetWorkoutList(QWidget):
 
 
         # populate layout
-        i = 0
-        j = 0
+        y = 0
+        x = 0
+        count = 0
         for button in self.w_workout_list:
-            self.grid.addWidget(button, i, j, WORKOUT_BUTTON_WIDTH_CELL,
+            self.grid.addWidget(button, y, x, WORKOUT_BUTTON_WIDTH_CELL,
                                 WORKOUT_BUTTON_LENGTH_CELL)
-            j += WORKOUT_BUTTON_LENGTH_CELL
-            if j >= WORKOUT_PER_LINE * WORKOUT_BUTTON_LENGTH_CELL :
-                i += WORKOUT_BUTTON_WIDTH_CELL
-                j = 0
-        self.grid.addWidget(self.back_button, i+WORKOUT_BUTTON_WIDTH_CELL+1,
+            count += 1
+            x = (count % WORKOUT_PER_LINE) * WORKOUT_BUTTON_LENGTH_CELL
+            y = (count // WORKOUT_PER_LINE) * WORKOUT_BUTTON_WIDTH_CELL
+        self.grid.addWidget(self.back_button, y+WORKOUT_BUTTON_WIDTH_CELL+1,
                             WORKOUT_PER_LINE*WORKOUT_BUTTON_LENGTH_CELL-1)
 
         # Temporary spacer to create the desired display
